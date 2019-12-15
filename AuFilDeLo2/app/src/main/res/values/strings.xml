@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">AuFilDeLo</string>
+    <string name="departement">Chosissez un département :</string>
+    <string name="commune">Choisissez une commune :</string>
+    <string name="interet">Choisissez un point d\'intérêt :</string>
+
+
+    <string-array name="departement">
+
+        <item>75(Paris)</item>
+
+        <item>77(Seine et Marne)</item>
+
+        <item>78(Yvelynes)</item>
+
+        <item>91(Essonne)</item>
+
+        <item>92(Hauts-deSeine)</item>
+
+        <item>93(Seine-Saint-Denis)</item>
+
+        <item>94(Val-de-Marne)</item>
+
+        <item>95(Val d\'Oise)</item>
+
+    </string-array>
+
+    <string-array name="interet">
+
+        <item>Pont</item>
+
+        <item>Viaduc</item>
+
+        <item>Passerelle</item>
+
+        <item>Autre</item>
+
+    </string-array>
+</resources>
