@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SpecInteret"></activity>
+        <activity android:name=".ListeFavoris"></activity>
+        <activity android:name=".SpecInteret" />
         <activity android:name=".ListeInteret" />
         <activity android:name=".MainActivity">
             <intent-filter>

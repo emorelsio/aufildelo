@@ -8,12 +8,15 @@
     android:background="@drawable/pont_139">
 
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:foregroundGravity="center"
         android:gravity="center"
         android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,15 +33,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/departement"
-                android:textSize="20dp"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:textSize="20dp" />
 
             <Spinner
                 android:id="@+id/spinnerDep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:spinnerMode="dialog"
-                android:background="@android:color/white" />
+                android:background="@android:color/white"
+                android:spinnerMode="dialog" />
         </LinearLayout>
 
         <LinearLayout
@@ -55,17 +58,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@android:color/white"
                 android:text="@string/commune"
+                android:textColor="@android:color/white"
                 android:textSize="20dp" />
 
             <Spinner
                 android:id="@+id/spinnerCom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:spinnerMode="dialog"
                 android:background="@android:color/white"
-                />
+                android:spinnerMode="dialog" />
         </LinearLayout>
 
         <LinearLayout
@@ -79,19 +81,19 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:textColor="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/interet"
+                android:textColor="@android:color/white"
                 android:textSize="20dp" />
 
             <Spinner
                 android:id="@+id/spinnerInt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:spinnerMode="dialog"
-                android:background="@android:color/white" />
+                android:background="@android:color/white"
+                android:spinnerMode="dialog" />
         </LinearLayout>
 
         <LinearLayout
@@ -109,8 +111,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="100dp"
                 android:layout_marginRight="100dp"
-                android:text="Button"
-                android:background="#CD5516"/>
+                android:background="#CD5516"
+                android:text="Rechercher" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
