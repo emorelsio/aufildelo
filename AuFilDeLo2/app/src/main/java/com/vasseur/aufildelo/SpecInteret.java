@@ -18,7 +18,7 @@ public class SpecInteret extends AppCompatActivity {
     private String patri = "";
     private String principale = "";
 
-    private TextView textView;
+    private TextView information;
     private Button ajouterFav;
     private Button supprimerFav;
     private FavorisRepository favorisRepository = new FavorisRepository(this);
@@ -35,8 +35,8 @@ public class SpecInteret extends AppCompatActivity {
         patri = intent.getStringExtra("patri");
         principale = intent.getStringExtra("princ");
 
-        textView = (TextView) findViewById(R.id.textView4);
-        textView.setText("Identifiant : " + identifiant + "\nCommune : " + commune + "\nNom officiel : " + patri + "\nDescription technique : " + principale);
+        information = (TextView) findViewById(R.id.textView4);
+        information.setText("Identifiant : " + identifiant + "\nCommune : " + commune + "\nNom officiel : " + patri + "\nDescription technique : " + principale);
 
         ajouterFav = (Button) findViewById(R.id.button2);
         supprimerFav = (Button) findViewById(R.id.button3);

@@ -2,7 +2,6 @@ package com.vasseur.aufildelo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,11 +16,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -31,16 +28,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import static androidx.appcompat.widget.AppCompatDrawableManager.get;
-
 
 public class MainActivity extends AppCompatActivity {
 
     private Button btnRecherche;
     private String URL = "http://192.168.43.36:8080/Mission2/api.php?dep=75";
-    private String departement="75";
-    private String commune="Paris";
-    private String interet="Pont";
+    private String departement = "75";
+    private String commune = "Paris";
+    private String interet = "Pont";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +62,6 @@ public class MainActivity extends AppCompatActivity {
         spinInt.setOnItemSelectedListener(listenerInt);
         spinCom.setOnItemSelectedListener(listenerCom);
 
-
-        //le code ci-dessous est le test de communication avec l'api
-
-
         requestServer(URL);
 
     }
@@ -93,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void requestServer(String URL){
+    public void requestServer(String URL) {
 
-        StringRequest stringRequest = new StringRequest(URL, new Response.Listener<String>() {
+        StringRequest requestApi = new StringRequest(URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.i("reponse", response);
@@ -109,20 +100,19 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+        RequestQueue fileDattente = Volley.newRequestQueue(this);
+        fileDattente.add(requestApi);
     }
 
-    private void parseJSON(String data) {//modifier
-        Log.i("data", "" + data);
-        //data = "[{\"commune\":\"Annet-sur-Marne\"},{\"commune\":\"Balloy\"},{\"commune\":\"Bois-le-Roi\"},{\"commune\":\"Boissise-le-Roi\"},{\"commune\":\"Bray-sur-Seine\"},{\"commune\":\"Chalifert\"},{\"commune\":\"Chamigny\"},{\"commune\":\"Champagne-sur-Seine\"},{\"commune\":\"Changis-sur-Marne\"},{\"commune\":\"Congis-sur-Thérouanne\"},{\"commune\":\"Dammarie-les-Lys\"},{\"commune\":\"Fontaine-le-Port\"},{\"commune\":\"Fresnes-sur-Marne\"},{\"commune\":\"Germigny-l'Evêque\"},{\"commune\":\"Isles-les-Meldeuses\"},{\"commune\":\"Isles-lès-Villenoy\"},{\"commune\":\"Jaulnes\"},{\"commune\":\"La Ferté-sous-Jouarre\"},{\"commune\":\"La Grande-Paroisse\"},{\"commune\":\"La Rochette\"},{\"commune\":\"Lagny-sur-Marne\"},{\"commune\":\"Luzancy\"},{\"commune\":\"Mareuil-lès-Meaux\"},{\"commune\":\"Marolles-sur-Seine\"},{\"commune\":\"Mary-sur-Marne\"},{\"commune\":\"Meaux\"},{\"commune\":\"Melun\"},{\"commune\":\"Méry-sur-Marne\"},{\"commune\":\"Montereau-Fault-Yonne\"},{\"commune\":\"Montévrain\"},{\"commune\":\"Noisiel\"},{\"commune\":\"Noyen-sur-Seine\"},{\"commune\":\"Poincy\"},{\"commune\":\"Ponthierry-Saint-Fargeau\"},{\"commune\":\"Précy-sur-Marne\"},{\"commune\":\"Saâcy-sur-Marne\"},{\"commune\":\"Saint-Mammès\"},{\"commune\":\"Saint-Thibault-des-Vignes\"},{\"commune\":\"Samois-sur-Seine\"},{\"commune\":\"Thomery\"},{\"commune\":\"Thorigny-sur-Marne\"},{\"commune\":\"Tombe (la)\"},{\"commune\":\"Torcy\"},{\"commune\":\"Trilbardou\"},{\"commune\":\"Trilport\"},{\"commune\":\"Ussy-sur-Marne\"},{\"commune\":\"Varreddes\"},{\"commune\":\"Villiers-sur-Seine\"},{\"commune\":\"Vimpelles\"},{\"commune\":\"Vulaines-sur-Seine\"}]";
+    private void parseJSON(String json) {//modifier
+        Log.i("json", "" + json);
         ArrayList com = new ArrayList();
         try {
-            JSONArray communes = new JSONArray(data);
+            JSONArray communes = new JSONArray(json);
 
             for (int k = 0; k < communes.length(); k++) {
-                JSONObject objOffers = new JSONObject(communes.getString(k));
-                com.add(objOffers.getString("commune"));
+                JSONObject object = new JSONObject(communes.getString(k));
+                com.add(object.getString("commune"));
             }
             Log.i("data", com.toString());
         } catch (JSONException e) {
@@ -136,9 +126,9 @@ public class MainActivity extends AppCompatActivity {
 
         Spinner spinCom = (Spinner) findViewById(R.id.spinnerCom);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, com);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinCom.setAdapter(adapter);
+        ArrayAdapter<String> adapterCom = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, com);
+        adapterCom.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinCom.setAdapter(adapterCom);
     }
 
     private final View.OnClickListener listenerRecherche = new View.OnClickListener() {
@@ -155,8 +145,8 @@ public class MainActivity extends AppCompatActivity {
     private AdapterView.OnItemSelectedListener listenerDep = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            departement = parent.getSelectedItem().toString().substring(0,2);
-            URL = URL.substring(0,URL.length()-2) + departement;
+            departement = parent.getSelectedItem().toString().substring(0, 2);
+            URL = URL.substring(0, URL.length() - 2) + departement;
             Log.i("url", URL);
             requestServer(URL);
 
@@ -191,6 +181,4 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
-
-
 }

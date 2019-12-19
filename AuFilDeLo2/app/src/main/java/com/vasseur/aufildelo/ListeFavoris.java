@@ -6,11 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -20,9 +18,9 @@ import Repository.FavorisRepository;
 public class ListeFavoris extends AppCompatActivity {
 
     private FavorisRepository favorisRepository = new FavorisRepository(this);
-    private ListView listView;
+    private ListView listDesFavoris;
     private String favoris;
-    private String[] listFavoris;
+    private String[] strFavoris;
     private String[] infoFavoris;
 
     private ArrayList<String> iden = new ArrayList<String>();
@@ -34,22 +32,22 @@ public class ListeFavoris extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_favoris);
 
-        listView = (ListView) findViewById(R.id.listFavoris);
+        listDesFavoris = (ListView) findViewById(R.id.listFavoris);
         if(favorisRepository.isFavorisConfigured("favoris")) {
             favoris = favorisRepository.getFavoris("favoris");
             favoris = favoris.substring(1, favoris.length() - 1);
-            listFavoris = favoris.split("--");
-            for (int i = 0; i < listFavoris.length; i++) {
-                infoFavoris = listFavoris[i].split("/");
+            strFavoris = favoris.split("--");
+            for (int i = 0; i < strFavoris.length; i++) {
+                infoFavoris = strFavoris[i].split("/");
                 iden.add(infoFavoris[0]);
                 com.add(infoFavoris[1]);
                 patri.add(infoFavoris[2]);
                 princ.add(infoFavoris[3]);
             }
 
-            ArrayAdapter<String> adapterList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, patri);
-            listView.setAdapter(adapterList);
-            listView.setOnItemClickListener(listenerList);
+            ArrayAdapter<String> adapterFavo = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, patri);
+            listDesFavoris.setAdapter(adapterFavo);
+            listDesFavoris.setOnItemClickListener(listenerList);
         } else{
             AlertDialog.Builder builder = new AlertDialog.Builder(ListeFavoris.this);
             builder.setMessage("Aucun favoris n'a été enregistré.").setTitle("Affichage des favoris :").setNegativeButton("Retour", new DialogInterface.OnClickListener() {
@@ -62,8 +60,6 @@ public class ListeFavoris extends AppCompatActivity {
             dialog.show();
 
         }
-
-
     }
 
     private AdapterView.OnItemClickListener listenerList = new AdapterView.OnItemClickListener() {

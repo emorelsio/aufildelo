@@ -36,14 +36,14 @@ public class ListeInteret extends AppCompatActivity {
     private ArrayList<String> patri = new ArrayList<String>();
     private ArrayList<String> princ = new ArrayList<String>();
 
-    private ListView listView;
-    TextView textView;
+    private ListView listRecherche;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_interet);
 
-        listView = (ListView) findViewById(R.id.list);
+        listRecherche = (ListView) findViewById(R.id.list);
 
         Intent intent = getIntent();
         departement = intent.getStringExtra("departement");
@@ -54,14 +54,14 @@ public class ListeInteret extends AppCompatActivity {
 
         requestServer(URL);
 
-        listView.setOnItemClickListener(listenerList);
+        listRecherche.setOnItemClickListener(listenerList);
 
     }
 
 
     public void requestServer(String URL){
 
-        StringRequest stringRequest = new StringRequest(URL, new Response.Listener<String>() {
+        StringRequest requestApi = new StringRequest(URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.i("reponseinformation",  response);
@@ -75,23 +75,22 @@ public class ListeInteret extends AppCompatActivity {
                 Toast.makeText(ListeInteret.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+        RequestQueue fileDattente = Volley.newRequestQueue(this);
+        fileDattente.add(requestApi);
     }
 
-    private void parseJSON(String data) {//modifier
-        Log.i("data", data);
-        //data = "[{\"commune\":\"Annet-sur-Marne\"},{\"commune\":\"Balloy\"},{\"commune\":\"Bois-le-Roi\"},{\"commune\":\"Boissise-le-Roi\"},{\"commune\":\"Bray-sur-Seine\"},{\"commune\":\"Chalifert\"},{\"commune\":\"Chamigny\"},{\"commune\":\"Champagne-sur-Seine\"},{\"commune\":\"Changis-sur-Marne\"},{\"commune\":\"Congis-sur-Thérouanne\"},{\"commune\":\"Dammarie-les-Lys\"},{\"commune\":\"Fontaine-le-Port\"},{\"commune\":\"Fresnes-sur-Marne\"},{\"commune\":\"Germigny-l'Evêque\"},{\"commune\":\"Isles-les-Meldeuses\"},{\"commune\":\"Isles-lès-Villenoy\"},{\"commune\":\"Jaulnes\"},{\"commune\":\"La Ferté-sous-Jouarre\"},{\"commune\":\"La Grande-Paroisse\"},{\"commune\":\"La Rochette\"},{\"commune\":\"Lagny-sur-Marne\"},{\"commune\":\"Luzancy\"},{\"commune\":\"Mareuil-lès-Meaux\"},{\"commune\":\"Marolles-sur-Seine\"},{\"commune\":\"Mary-sur-Marne\"},{\"commune\":\"Meaux\"},{\"commune\":\"Melun\"},{\"commune\":\"Méry-sur-Marne\"},{\"commune\":\"Montereau-Fault-Yonne\"},{\"commune\":\"Montévrain\"},{\"commune\":\"Noisiel\"},{\"commune\":\"Noyen-sur-Seine\"},{\"commune\":\"Poincy\"},{\"commune\":\"Ponthierry-Saint-Fargeau\"},{\"commune\":\"Précy-sur-Marne\"},{\"commune\":\"Saâcy-sur-Marne\"},{\"commune\":\"Saint-Mammès\"},{\"commune\":\"Saint-Thibault-des-Vignes\"},{\"commune\":\"Samois-sur-Seine\"},{\"commune\":\"Thomery\"},{\"commune\":\"Thorigny-sur-Marne\"},{\"commune\":\"Tombe (la)\"},{\"commune\":\"Torcy\"},{\"commune\":\"Trilbardou\"},{\"commune\":\"Trilport\"},{\"commune\":\"Ussy-sur-Marne\"},{\"commune\":\"Varreddes\"},{\"commune\":\"Villiers-sur-Seine\"},{\"commune\":\"Vimpelles\"},{\"commune\":\"Vulaines-sur-Seine\"}]";
+    private void parseJSON(String json) {//modifier
+        Log.i("json", json);
 
         try {
-            JSONArray information = new JSONArray(data);
+            JSONArray information = new JSONArray(json);
 
             for (int k = 0; k < information.length(); k++) {
-                JSONObject objOffers = new JSONObject(information.getString(k));
-                iden.add(objOffers.getString("identifiant"));
-                com.add(objOffers.getString("commune"));
-                patri.add(objOffers.getString("elem_patri"));
-                princ.add(objOffers.getString("elem_princ"));
+                JSONObject object = new JSONObject(information.getString(k));
+                iden.add(object.getString("identifiant"));
+                com.add(object.getString("commune"));
+                patri.add(object.getString("elem_patri"));
+                princ.add(object.getString("elem_princ"));
 
             }
 
@@ -105,7 +104,7 @@ public class ListeInteret extends AppCompatActivity {
 
     private void alimListe(ArrayList arrayList){
         ArrayAdapter<String> adapterList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
-        listView.setAdapter(adapterList);
+        listRecherche.setAdapter(adapterList);
     }
 
     private AdapterView.OnItemClickListener listenerList = new AdapterView.OnItemClickListener() {

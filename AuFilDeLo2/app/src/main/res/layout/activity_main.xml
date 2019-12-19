@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/departement"
-                android:textColor="@android:color/white"
+                android:textColor="#070606"
                 android:textSize="20dp" />
 
             <Spinner
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/commune"
-                android:textColor="@android:color/white"
+                android:textColor="#030303"
                 android:textSize="20dp" />
 
             <Spinner
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/interet"
-                android:textColor="@android:color/white"
+                android:textColor="#000000"
                 android:textSize="20dp" />
 
             <Spinner
